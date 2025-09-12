@@ -1,10 +1,17 @@
-import { Button } from "@/components/ui/button";
+import CTAsection from "@/components/Home/CTAsection";
+import DemoSection from "@/components/Home/DemoSection";
+import HeroSection from "@/components/Home/HeroSection";
+import HowItWorks from "@/components/Home/HowItWorks";
+import PricingSection from "@/components/Home/PricingSection";
 
 export default function Home() {
   return (
-    <div>
-      home page 
-      <Button >shdcn UI me</Button>
+    <div className="relative w-full">
+      <HeroSection />
+      <DemoSection />
+      <HowItWorks />
+      <PricingSection />
+      <CTAsection />
     </div>
   );
 }

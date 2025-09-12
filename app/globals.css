@@ -119,4 +119,24 @@
   body {
     @apply bg-background text-foreground;
   }
+  h1{
+    @apply text-3xl font-bold;
+  }
+  h2{
+    @apply text-lg font-semibold;
+  }
+  @keyframes gradient-x {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+.animate-gradient-x {
+  animation: gradient-x 3s ease infinite;
+  background-size: 200% 200%;
+}
+
 }
