@@ -2,6 +2,7 @@
 import React from "react";
 import Upload_form_input from "./Upload_form_input";
 import z from "zod";
+import { useUploadThing } from "@/utils/uploadthing";
 
 const schema = z.object({
   file: z
@@ -16,7 +17,18 @@ const schema = z.object({
     ),
 });
 const Upload_form = () => {
-  const handelSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const { startUpload, routeConfig } = useUploadThing("pdfUploader", {
+    onClientUploadComplete: () => {
+      alert("uploaded successfully!");
+    },
+    onUploadError: () => {
+      alert("error occurred while uploading");
+    },
+    onUploadBegin: ({ file }) => {
+      console.log("upload has begun for", file);
+    },
+  });
+  const handelSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     console.log("submitted");
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
@@ -34,6 +46,9 @@ const Upload_form = () => {
     // validating the file using ZOD
     // schema with zod
     // upload the file into uploadthing
+
+    const resp = await startUpload([file]);
+    if (!resp) return;
     //parse the PDF using langchain
     // summarise the PDF using AI
     // save the summary into database

@@ -1,3 +1,4 @@
+"use client";
 import { FileText } from "lucide-react";
 import NavLink from "./NavLink";
 import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
