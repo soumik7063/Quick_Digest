@@ -3,6 +3,8 @@ import { Source_Sans_3 as FontSans } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/common/Header";
 import { ClerkProvider } from "@clerk/nextjs";
+import { Toaster } from "@/components/ui/sonner"
+
 
 const fontSans = FontSans({
   variable: "--font-sans",
@@ -30,6 +32,7 @@ export default function RootLayout({
           <Header />
           {children}
           {/* <Footer/> */}
+          <Toaster/>
         </body>
       </html>
     </ClerkProvider>
