@@ -3,26 +3,31 @@ import React from "react";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 
-interface uploadFormInputProps {
+interface UploadFormInputProps {
   onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
 }
-const Upload_form_input = ({ onSubmit }: uploadFormInputProps) => {
+
+const Upload_form_input = ({ onSubmit }: UploadFormInputProps) => {
   return (
-    <div>
-      <form onSubmit={onSubmit} className="flex flex-col gap-6 max-w-4xl">
-        <div className="flex justify-center gap-6">
-          <Input
-            className="border shadow bg-linear-to-r from-rose-300 via-rose-400 to-rose-500"
-            type="file"
-            id="file"
-            name="file"
-            accept="application/pdf"
-            required
-          />
-          <Button>Upload PDF</Button>
-        </div>
-      </form>
-    </div>
+    <form
+      onSubmit={onSubmit}
+      className="flex flex-col sm:flex-row items-center justify-center gap-6"
+    >
+      <Input
+        type="file"
+        name="file"
+        accept="application/pdf"
+        required
+        className="max-w-sm bg-neutral-900 text-indigo-300 border border-indigo-500/30 file:text-indigo-400"
+      />
+
+      <Button
+        className="rounded-full px-8 bg-gradient-to-r from-indigo-500 to-indigo-700
+        hover:from-indigo-600 hover:to-indigo-800 transition-all"
+      >
+        Upload PDF
+      </Button>
+    </form>
   );
 };
 

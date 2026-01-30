@@ -1,3 +1,4 @@
+import Footer from "@/components/common/Footer";
 import CTAsection from "@/components/Home/CTAsection";
 import DemoSection from "@/components/Home/DemoSection";
 import HeroSection from "@/components/Home/HeroSection";

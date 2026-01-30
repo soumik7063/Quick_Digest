@@ -1,5 +1,4 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
-console.log("Gemini API Key:", process.env.GEMINI_API_KEY);
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
 const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
@@ -17,7 +16,7 @@ ${pdfText}
 
     const response = await model.generateContent(prompt);
 
-    console.log("Raw response:", response);
+    // console.log("Raw response:", response);
 
     const finalText = response.response.text();
     return finalText;

@@ -1,92 +1,72 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import Upload_form_input from "./Upload_form_input";
-import z from "zod";
+import { z } from "zod";
 import { useUploadThing } from "@/utils/uploadthing";
 import { toast } from "sonner";
 import { generateResp } from "@/actions/upload-action";
-
-function markdownToText(md: string) {
-  return md.replace(/[#*_`>-]/g, "").replace(/\n{2,}/g, "\n");
-}
+import AnimatedSummary from "../common/TypeAnimation";
 
 const schema = z.object({
   file: z
-    .instanceof(File, { message: "invalid file" })
-    .refine(
-      (file) => file.size <= 20 * 1024 * 1024,
-      "file size must be less than 20MB",
-    )
+    .instanceof(File)
+    .refine((file) => file.size <= 20 * 1024 * 1024, "Max 20MB allowed")
     .refine(
       (file) => file.type.startsWith("application/pdf"),
-      "File must be a PDF",
+      "Only PDF files allowed",
     ),
 });
 
 const Upload_form = () => {
-  const [output, setoutput] = useState("");
-  const [generateing, setGenerating] = useState(false);
+  const [output, setOutput] = useState("");
+  const [generating, setGenerating] = useState(false);
 
-  const { startUpload } = useUploadThing("pdfUploader", {
-    onClientUploadComplete: () => {
-      toast.success("uploaded successfully!");
-    },
-    onUploadError: () => {
-      toast.warning("error occurred while uploading");
-    },
-    onUploadBegin: ({ file }) => {
-      console.log("upload has begun for", file);
-    },
-  });
+  const { startUpload } = useUploadThing("pdfUploader");
 
-  // ✅ FIX: useEffect must be here
   useEffect(() => {
     if (output) setGenerating(false);
   }, [output]);
 
   const handelSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    setGenerating(true);
     e.preventDefault();
+    setGenerating(true);
+    setOutput("");
 
-    const formData = new FormData(e.currentTarget);
-    const file = formData.get("file") as File;
+    const file = new FormData(e.currentTarget).get("file");
+    if (!(file instanceof File)) return;
 
-    const validatedFiled = schema.safeParse({ file });
-
-    if (!validatedFiled.success) {
-      toast.error(
-        validatedFiled.error.flatten().fieldErrors.file?.[0] ?? "invalid file",
-      );
+    const valid = schema.safeParse({ file });
+    if (!valid.success) {
+      toast.error(valid.error.errors[0].message);
+      setGenerating(false);
       return;
     }
 
-    toast.success("file is valid, uploading...");
-    const resp = await startUpload([file]);
+    const resp: any = await startUpload([file]);
+    toast.success("Processing PDF…");
 
-    if (!resp) {
-      toast.error("upload failed, please try again");
-      return;
-    }
-
-    toast.success("processing pdf, this may take a while...");
     const summary = await generateResp(resp);
-
-    setoutput(markdownToText(summary?.data as string));
-    console.log("summary", summary);
+    setOutput(summary?.data as string);
   };
 
   return (
-    <section className="max-w-7xl mx-auto">
-      <Upload_form_input onSubmit={handelSubmit} />
-      {generateing && <div className="loader text-center"></div>}
-      {output && (
-        <div className="flex flex-col mt-4 gap-10 p-8">
-          <h1 className="text-center">
-            Here is the crisp summary of this whole PDF
-          </h1>
-          <p>{output}</p>
-        </div>
-      )}
+    <section className="bg-neutral-950 text-indigo-100 py-16">
+      <div className="max-w-4xl mx-auto px-6 text-center space-y-10">
+        <Upload_form_input onSubmit={handelSubmit} />
+
+        {generating && (
+          <p className="text-indigo-400 animate-pulse">Generating summary…</p>
+        )}
+
+        {output && (
+          <div className="bg-neutral-900 border border-indigo-500/20 rounded-xl p-8 space-y-6">
+            <h2 className="text-2xl font-bold text-indigo-400">
+              Your PDF Summary
+            </h2>
+            <AnimatedSummary content={output} />
+          </div>
+        )}
+      </div>
     </section>
   );
 };
