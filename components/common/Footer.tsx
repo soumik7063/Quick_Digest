@@ -28,11 +28,11 @@ export default function Footer() {
           <ul className="space-y-2 text-sm">
             <li className="flex items-center gap-2">
               <FaPhoneAlt />
-              <span>+91-XXXXXXXXXX</span>
+              <span>+91-7063804749</span>
             </li>
             <li className="flex items-center gap-2">
               <FaEnvelope />
-              <span>soumikghatak@email.com</span>
+              <span>ghataksoumik7063@gmail.com</span>
             </li>
           </ul>
         </div>
@@ -42,7 +42,7 @@ export default function Footer() {
           <h2 className="text-xl font-semibold text-white mb-3">Follow Me</h2>
           <div className="flex gap-4 text-2xl">
             <a
-              href="https://linkedin.com/in/yourprofile"
+              href="https://www.linkedin.com/in/soumik-ghatak-6584bb23b/"
               target="_blank"
               rel="noopener noreferrer"
               className="hover:text-blue-500 transition"
@@ -51,7 +51,7 @@ export default function Footer() {
             </a>
 
             <a
-              href="https://github.com/yourprofile"
+              href="https://github.com/soumik7063"
               target="_blank"
               rel="noopener noreferrer"
               className="hover:text-gray-100 transition"
@@ -60,7 +60,7 @@ export default function Footer() {
             </a>
 
             <a
-              href="https://instagram.com/yourprofile"
+              href="https://www.instagram.com/soumik_ghatak9876?igsh=NHplMzhhYzh6OHR5"
               target="_blank"
               rel="noopener noreferrer"
               className="hover:text-pink-500 transition"
@@ -69,7 +69,7 @@ export default function Footer() {
             </a>
 
             <a
-              href="https://facebook.com/yourprofile"
+              href="https://www.facebook.com/share/1AUa3vubLN/"
               target="_blank"
               rel="noopener noreferrer"
               className="hover:text-blue-600 transition"

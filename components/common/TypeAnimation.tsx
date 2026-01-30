@@ -12,7 +12,7 @@ export default function AnimatedSummary({ content }: { content: string }) {
       {!done ? (
         <TypeAnimation
           sequence={[content, () => setDone(true)]}
-          speed={99}
+          speed={70}
           wrapper="div"
           cursor={true}
           className="whitespace-pre-wrap leading-relaxed"
