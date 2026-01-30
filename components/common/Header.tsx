@@ -19,7 +19,12 @@ export default function Header() {
         {/* Center links */}
         <div className="hidden md:flex items-center gap-10 text-sm">
           <SignedOut>
-            <NavLink href="/pricing">Pricing</NavLink>
+            <NavLink
+              href="/pricing"
+              className=" text-indigo-400 font-semibold hover:text-indigo-300"
+            >
+              Pricing
+            </NavLink>
           </SignedOut>
 
           <SignedIn>
