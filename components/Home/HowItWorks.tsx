@@ -35,8 +35,8 @@ const HowItWorks = () => {
           particleCount={100}
           particleSpread={10}
           speed={0.1}
-          particleBaseSize={100}
-          moveParticlesOnHover
+          particleBaseSize={80}
+          // moveParticlesOnHover
           alphaParticles={false}
           disableRotation={false}
           pixelRatio={1}

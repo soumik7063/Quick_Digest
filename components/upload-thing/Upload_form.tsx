@@ -6,6 +6,7 @@ import { useUploadThing } from "@/utils/uploadthing";
 import { toast } from "sonner";
 import { generateResp, storePDF } from "@/actions/upload-action";
 import AnimatedSummary from "../common/TypeAnimation";
+import { useRouter } from "next/navigation";
 
 const schema = z.object({
   file: z
@@ -18,6 +19,7 @@ const schema = z.object({
 });
 
 const Upload_form = () => {
+  const router = useRouter();
   const [output, setOutput] = useState("");
   const [generating, setGenerating] = useState(false);
 
@@ -28,43 +30,54 @@ const Upload_form = () => {
   }, [output]);
 
   const handelSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setGenerating(true);
-    setOutput("");
+    try {
+      e.preventDefault();
+      setGenerating(true);
+      setOutput("");
 
-    const file = new FormData(e.currentTarget).get("file");
-    if (!(file instanceof File)) return;
+      const file = new FormData(e.currentTarget).get("file");
+      if (!(file instanceof File)) return;
 
-    const valid = schema.safeParse({ file });
-    if (!valid.success) {
-      toast.error(valid.error.errors[0].message);
+      const valid = schema.safeParse({ file });
+      if (!valid.success) {
+        toast.error(valid.error.errors[0].message);
+        setGenerating(false);
+        return;
+      }
+
+      const resp: any = await startUpload([file]);
+      toast.success("Processing PDF…");
+
+      const summary = await generateResp(resp);
+      toast.success("✨ Generating response …");
+
+      let storeResult: any;
+      if (summary?.data) {
+        toast.success("🗒️ Saving your PDF… Hold on tightly");
+
+        storeResult = await storePDF({
+          fileURL: resp[0].serverData.file.url,
+          file_name: file.name,
+          title: summary.data.title,
+          summary_text: summary.data?.summary,
+        });
+      }
+      setOutput(summary?.data?.summary as string);
+      if (storeResult) {
+        console.log(storeResult);
+        toast("✅ saved successfully");
+      }
+      router.push(`/summaries/${storeResult.data.id}`);
+    } catch (error) {
       setGenerating(false);
-      return;
+      console.log("error occured: ", error);
+    } finally {
+      setGenerating(false);
     }
-
-    const resp: any = await startUpload([file]);
-    toast.success("Processing PDF…");
-
-    const summary = await generateResp(resp);
-    toast.success("✨ Generating response …");
-
-    let storeResult: any;
-    if (summary?.data) {
-      toast.success("🗒️ Saving your PDF… Hold on tightly");
-
-      storeResult = await storePDF({
-        fileURL: resp[0].serverData.file.url,
-        file_name: file.name,
-        title: summary.data.title,
-        summary_text: summary.data?.summary,
-      });
-    }
-    toast("✅ saved successfully");
-    setOutput(summary?.data?.summary as string);
   };
 
   return (
-    <section className="bg-neutral-950 text-indigo-100 py-16">
+    <section className="relative text-indigo-100 py-16">
       <div className="max-w-4xl mx-auto px-6 text-center space-y-10">
         <Upload_form_input onSubmit={handelSubmit} />
 

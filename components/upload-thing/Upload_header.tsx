@@ -12,15 +12,15 @@ const Upload_header = () => {
           particleColors={["#ffffff"]}
           particleCount={100}
           particleSpread={10}
-          speed={0.1}
-          particleBaseSize={100}
-          moveParticlesOnHover
-          alphaParticles={false}
-          disableRotation={false}
+          speed={0.2}
+          particleBaseSize={90}
+          // moveParticlesOnHover
+          alphaParticles={true}
+          disableRotation={true}
           pixelRatio={1}
         />
       </div>
-      <section className="bg-neutral-950 text-white">
+      <section className="relative">
         <div className="mx-auto max-w-5xl px-6 py-24 text-center">
           <div className="flex flex-col items-center gap-6">
             {/* Badge */}

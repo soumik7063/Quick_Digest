@@ -14,14 +14,14 @@ const HeroSection = () => {
           particleCount={100}
           particleSpread={10}
           speed={0.1}
-          particleBaseSize={100}
-          moveParticlesOnHover
+          particleBaseSize={80}
+          // moveParticlesOnHover
           alphaParticles={false}
           disableRotation={false}
           pixelRatio={1}
         />
       </div>
-      <section className=" overflow-hidden bg-neutral-950">
+      <section className="relative">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-20 text-center">
           {/* Badge */}
 
@@ -61,8 +61,11 @@ const HeroSection = () => {
               hover:from-indigo-500 hover:to-indigo-600
               shadow-lg transition-all"
             >
-              <Link href="/upload" className="flex items-center gap-2">
-                Try Summarise
+              <Link
+                href="/upload"
+                className="flex items-center gap-2 cursor-pointer"
+              >
+                <p className="block">Try Summarise</p>
                 <ArrowRight className="w-5 h-5 animate-pulse" />
               </Link>
             </Button>

@@ -17,7 +17,7 @@ CREATE TABLE users (
 CREATE TABLE pdf_summaries (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
 
-    user_id UUID NOT NULL,
+    user_id VARCHAR(255) NOT NULL,
     original_file_url TEXT NOT NULL,
     file_name TEXT,
     title TEXT,
@@ -27,12 +27,7 @@ CREATE TABLE pdf_summaries (
     status VARCHAR(50) DEFAULT 'completed',
 
     created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
-
-    CONSTRAINT fk_pdf_user
-        FOREIGN KEY (user_id)
-        REFERENCES users(id)
-        ON DELETE CASCADE
+    updated_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE payments (
@@ -44,15 +39,10 @@ CREATE TABLE payments (
     stripe_payment_id VARCHAR(255) UNIQUE NOT NULL,
     price_id VARCHAR(255) NOT NULL,
 
-    user_email VARCHAR(255) NOT NULL,
+    user_email VARCHAR(255) NOT NULL REFERENCES users(email),
 
     created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
-
-    CONSTRAINT fk_payment_user
-        FOREIGN KEY (user_email)
-        REFERENCES users(email)
-        ON DELETE CASCADE
+    updated_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE OR REPLACE FUNCTION update_updated_at_column()

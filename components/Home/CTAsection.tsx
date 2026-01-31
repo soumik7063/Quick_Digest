@@ -13,14 +13,14 @@ const CTAsection = () => {
           particleCount={100}
           particleSpread={10}
           speed={0.1}
-          particleBaseSize={100}
-          moveParticlesOnHover
+          particleBaseSize={80}
+          // moveParticlesOnHover
           alphaParticles={false}
           disableRotation={false}
           pixelRatio={1}
         />
       </div>
-      <section className=" overflow-hidden bg-neutral-950">
+      <section className="relative">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24 text-center">
           {/* Heading */}
           <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-100">

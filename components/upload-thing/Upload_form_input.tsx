@@ -18,7 +18,7 @@ const Upload_form_input = ({ onSubmit }: UploadFormInputProps) => {
         name="file"
         accept="application/pdf"
         required
-        className="max-w-sm bg-neutral-900 text-indigo-300 border border-indigo-500/30 file:text-indigo-400"
+        className="max-w-sm cursor-pointer bg-neutral-900 text-indigo-300 border border-indigo-500/30 file:text-indigo-400"
       />
 
       <Button

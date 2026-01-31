@@ -7,6 +7,7 @@ import { auth } from "@clerk/nextjs/server";
 import { dbConnection } from "@/lib/db";
 import { string } from "zod/v4";
 import { formatFilenameAsTitle } from "@/utils/format-ulits";
+import { revalidatePath } from "next/cache";
 
 interface responsePDF {
   fileURL: string;
@@ -67,6 +68,7 @@ export async function generateResp(
     };
   }
 }
+
 async function savePDFsummary({
   userId,
   fileURL,
@@ -80,25 +82,26 @@ async function savePDFsummary({
   title: string;
   summary_text: string;
 }) {
-  try {
-    const sql = await dbConnection();
-    await sql`INSERT INTO pdf_summaries (
-    user_id,
-    original_file_url,
-    file_name,
-    title,
-    summary_text,
-) VALUES (
-    ${userId},
-    ${fileURL},
-    ${file_name},
-    ${title},
-    ${summary_text}
-);`;
-  } catch (error) {
-    console.log("Error in saving pdf ", error);
-    throw error;
-  }
+  const sql = await dbConnection();
+
+  const [result] = await sql`
+    INSERT INTO pdf_summaries (
+      user_id,
+      original_file_url,
+      file_name,
+      title,
+      summary_text
+    ) VALUES (
+      ${userId},
+      ${fileURL},
+      ${file_name},
+      ${title},
+      ${summary_text}
+    )
+    RETURNING *;
+  `;
+
+  return result;
 }
 export async function storePDF({
   fileURL,
@@ -106,10 +109,11 @@ export async function storePDF({
   title,
   summary_text,
 }: responsePDF) {
-  let savedSummary: unknown;
+  let savedSummary: any;
 
   try {
     const { userId } = await auth();
+    console.log(userId);
     if (!userId) {
       return {
         success: false,
@@ -130,14 +134,19 @@ export async function storePDF({
         message: "Failed to save summary , try again later ...",
       };
     }
-    return {
-      success: true,
-      message: "summary saved successfully",
-    };
   } catch (error) {
     return {
       success: false,
       message: error instanceof Error ? error.message : "Error saving pdf",
     };
   }
+  //revalidate cache
+  revalidatePath(`/summaries/${savedSummary.id}`);
+  return {
+    success: true,
+    message: "summary saved successfully",
+    data: {
+      id: savedSummary.id,
+    },
+  };
 }
