@@ -26,6 +26,8 @@ Output format:
 3. Key points as bullet list (5-10 bullets)
 4. Important conclusions or takeaways
 5. Keywords (5-10)
+6. Use meaningful emojis/icons
+7. Make bold / italic markdown where needed
 
 If the content is incomplete, unclear, or corrupted, explicitly mention the limitations in the summary.
 

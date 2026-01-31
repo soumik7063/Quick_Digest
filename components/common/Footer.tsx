@@ -6,7 +6,6 @@ import {
   FaPhoneAlt,
   FaEnvelope,
 } from "react-icons/fa";
-
 export default function Footer() {
   return (
     <footer className="bg-neutral-950 border-t border-gray-600 text-gray-300 px-6 py-10">

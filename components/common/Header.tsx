@@ -3,6 +3,7 @@
 import { FileText } from "lucide-react";
 import NavLink from "./NavLink";
 import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+import ShinyText from "../ui/ShinyText";
 
 export default function Header() {
   return (
@@ -11,9 +12,22 @@ export default function Header() {
         {/* Logo */}
         <NavLink href="/" className="flex items-center gap-2 shrink-0">
           <FileText className="w-6 h-6 text-indigo-400 transition-transform hover:rotate-12" />
-          <span className="font-extrabold text-indigo-400 text-lg lg:text-xl">
+          {/* <span className="font-extrabold text-indigo-400 text-lg lg:text-xl">
             Quick Digest
-          </span>
+          </span> */}
+          <ShinyText
+            className="font-extrabold text-lg lg:text-xl"
+            text="Quick Digest"
+            speed={2}
+            delay={0}
+            color="#5C6BC0"
+            shineColor="#9FA8DA"
+            spread={120}
+            direction="left"
+            yoyo={true}
+            pauseOnHover={false}
+            disabled={false}
+          />
         </NavLink>
 
         {/* Center links */}

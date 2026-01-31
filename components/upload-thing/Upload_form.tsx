@@ -4,7 +4,7 @@ import Upload_form_input from "./Upload_form_input";
 import { z } from "zod";
 import { useUploadThing } from "@/utils/uploadthing";
 import { toast } from "sonner";
-import { generateResp } from "@/actions/upload-action";
+import { generateResp, storePDF } from "@/actions/upload-action";
 import AnimatedSummary from "../common/TypeAnimation";
 
 const schema = z.object({
@@ -46,7 +46,21 @@ const Upload_form = () => {
     toast.success("Processing PDF…");
 
     const summary = await generateResp(resp);
-    setOutput(summary?.data as string);
+    toast.success("✨ Generating response …");
+
+    let storeResult: any;
+    if (summary?.data) {
+      toast.success("🗒️ Saving your PDF… Hold on tightly");
+
+      storeResult = await storePDF({
+        fileURL: resp[0].serverData.file.url,
+        file_name: file.name,
+        title: summary.data.title,
+        summary_text: summary.data?.summary,
+      });
+    }
+    toast("✅ saved successfully");
+    setOutput(summary?.data?.summary as string);
   };
 
   return (

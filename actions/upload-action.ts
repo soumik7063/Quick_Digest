@@ -3,7 +3,17 @@
 import { generateResponse } from "../lib/openAI";
 import { fetchAndExtractText } from "../lib/langChain";
 import { generateResponseGeminiAi } from "@/lib/geminiAI";
+import { auth } from "@clerk/nextjs/server";
+import { dbConnection } from "@/lib/db";
+import { string } from "zod/v4";
+import { formatFilenameAsTitle } from "@/utils/format-ulits";
 
+interface responsePDF {
+  fileURL: string;
+  file_name: string;
+  title: string;
+  summary_text: string;
+}
 export async function generateResp(
   uploadResp: [
     {
@@ -14,8 +24,8 @@ export async function generateResp(
           name: string;
         };
       };
-    }
-  ]
+    },
+  ],
 ) {
   if (!uploadResp[0]) {
     return {
@@ -38,6 +48,7 @@ export async function generateResp(
     };
   }
   let summary;
+  let formatedFilename = formatFilenameAsTitle(name);
   try {
     const pdfText = await fetchAndExtractText(url);
     // summary = await generateResponse(pdfText);
@@ -46,13 +57,87 @@ export async function generateResp(
     return {
       success: true,
       message: "success",
-      data: summary,
+      data: { title: formatedFilename, summary },
     };
   } catch (error) {
     return {
       success: false,
       message: error,
       data: null,
+    };
+  }
+}
+async function savePDFsummary({
+  userId,
+  fileURL,
+  file_name,
+  title,
+  summary_text,
+}: {
+  userId: string;
+  fileURL: string;
+  file_name: string;
+  title: string;
+  summary_text: string;
+}) {
+  try {
+    const sql = await dbConnection();
+    await sql`INSERT INTO pdf_summaries (
+    user_id,
+    original_file_url,
+    file_name,
+    title,
+    summary_text,
+) VALUES (
+    ${userId},
+    ${fileURL},
+    ${file_name},
+    ${title},
+    ${summary_text}
+);`;
+  } catch (error) {
+    console.log("Error in saving pdf ", error);
+    throw error;
+  }
+}
+export async function storePDF({
+  fileURL,
+  file_name,
+  title,
+  summary_text,
+}: responsePDF) {
+  let savedSummary: unknown;
+
+  try {
+    const { userId } = await auth();
+    if (!userId) {
+      return {
+        success: false,
+        message: "user not found",
+      };
+    }
+    savedSummary = await savePDFsummary({
+      userId,
+      fileURL,
+      file_name,
+      title,
+      summary_text,
+    });
+
+    if (!savedSummary) {
+      return {
+        success: false,
+        message: "Failed to save summary , try again later ...",
+      };
+    }
+    return {
+      success: true,
+      message: "summary saved successfully",
+    };
+  } catch (error) {
+    return {
+      success: false,
+      message: error instanceof Error ? error.message : "Error saving pdf",
     };
   }
 }
