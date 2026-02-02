@@ -11,7 +11,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { dbConnection } from "@/lib/db";
 import { deleteSummary } from "@/actions/summary-action";
 import { useRouter } from "next/navigation";
 interface DeleteComponentProps {

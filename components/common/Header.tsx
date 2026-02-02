@@ -1,11 +1,19 @@
 "use client";
 
-import { FileText } from "lucide-react";
+import { FileText, Hamburger } from "lucide-react";
+import { RxCross2 } from "react-icons/rx";
 import NavLink from "./NavLink";
 import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import ShinyText from "../ui/ShinyText";
+import { FaHamburger } from "react-icons/fa";
+import { useState } from "react";
+import { easeInOut } from "motion/react";
 
 export default function Header() {
+  const [open, setOpen] = useState(false);
+  const toggleBtn = () => {
+    setOpen((prev) => !prev);
+  };
   return (
     <nav className="sticky top-0 z-50 bg-neutral-950 border-b border-white/10">
       <div className="max-w-7xl mx-auto flex items-center justify-between px-4 sm:px-6 lg:px-8 py-4">
@@ -56,7 +64,7 @@ export default function Header() {
             <>
               <NavLink
                 href="/upload"
-                className="px-4 py-2 rounded-lg bg-indigo-500 text-white 
+                className="hidden sm:block px-4 py-2 rounded-lg bg-indigo-500 text-white 
                            hover:bg-indigo-600 transition text-sm font-medium"
               >
                 Upload PDF
@@ -68,8 +76,10 @@ export default function Header() {
               >
                 Pro
               </span>
-
               <UserButton />
+              <button onClick={toggleBtn} className="relative sm:hidden">
+                <FaHamburger className="text-white h-6 w-6" />
+              </button>
             </>
           </SignedIn>
 
@@ -83,6 +93,28 @@ export default function Header() {
             </NavLink>
           </SignedOut>
         </div>
+      </div>
+      <div
+        className={`bg-neutral-800 absolute h-[80px] w-full top-0
+        ${open ? "translate-y-0" : "-translate-y-[100px]"}
+        transform ease-in-out duration-500`}
+      >
+        <SignedIn>
+          <div className="flex justify-between px-4 pt-6">
+            <NavLink href="/dashboard">
+              <span
+                onClick={() => setOpen(false)}
+                className=" text-indigo-400 text-lg font-semibold hover:text-indigo-300"
+              >
+                Your summaries
+              </span>
+            </NavLink>
+            <RxCross2
+              onClick={toggleBtn}
+              className="text-white h-6 w-6 relative"
+            />
+          </div>
+        </SignedIn>
       </div>
     </nav>
   );

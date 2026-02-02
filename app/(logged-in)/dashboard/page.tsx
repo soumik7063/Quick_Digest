@@ -40,9 +40,19 @@ const DashboardPage = async () => {
       </p>
       <div className="mt-10 grid gap-3 md:gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
         {summaries.data.length === 0 ? (
-          <p className="text-gray-400 col-span-full text-center">
-            No summaries yet 📄
-          </p>
+          <div className="flex flex-col gap-4 items-center mx-auto">
+            <p className="text-gray-400 font-semibold col-span-full text-center">
+              No summaries yet 📄
+            </p>
+            <button>
+              <Link
+                href="/upload"
+                className="flex text-[10px] sm:text-base items-center bg-linear-to-r from-indigo-400 to-indigo-700 px-1 sm:px-1 py-1 sm:py-1 rounded-lg"
+              >
+                <Plus className="h-4 w-4" /> Add summay
+              </Link>
+            </button>
+          </div>
         ) : (
           summaries.data.map((item) => (
             <SummaryCard key={item.id} summary={item} />
