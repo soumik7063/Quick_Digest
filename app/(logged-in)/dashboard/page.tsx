@@ -1,10 +1,18 @@
 import SummaryCard from "@/components/summary-card/SummaryCard";
+import { auth } from "@clerk/nextjs/server";
 import { ArrowUp, ArrowUpRight, ArrowUpWideNarrow, Plus } from "lucide-react";
+import { redirect } from "next/navigation";
 import Link from "next/link";
 
 import React from "react";
+import { getSummaries } from "@/lib/summaries";
 
-const page = () => {
+const DashboardPage = async () => {
+  const { userId } = await auth();
+  if (!userId) {
+    redirect("/sign-in");
+  }
+  const summaries = await getSummaries();
   return (
     <div className="min-h-screen text-white mt-10 px-5 sm:px-20">
       <div className="flex justify-between">
@@ -31,13 +39,18 @@ const page = () => {
         <ArrowUpRight className="h-4 w-4 inline-block" /> to unlimited uploads
       </p>
       <div className="mt-10 grid gap-3 md:gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
-        <SummaryCard />
-        <SummaryCard />
-        <SummaryCard />
-        <SummaryCard />
+        {summaries.data.length === 0 ? (
+          <p className="text-gray-400 col-span-full text-center">
+            No summaries yet 📄
+          </p>
+        ) : (
+          summaries.data.map((item) => (
+            <SummaryCard key={item.id} summary={item} />
+          ))
+        )}
       </div>
     </div>
   );
 };
 
-export default page;
+export default DashboardPage;

@@ -67,7 +67,7 @@ const Upload_form = () => {
         console.log(storeResult);
         toast("✅ saved successfully");
       }
-      router.push(`/summaries/${storeResult.data.id}`);
+      // router.push(`/summaries/${storeResult.data.id}`);
     } catch (error) {
       setGenerating(false);
       console.log("error occured: ", error);
