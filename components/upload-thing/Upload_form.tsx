@@ -41,6 +41,7 @@ const Upload_form = () => {
       const valid = schema.safeParse({ file });
       if (!valid.success) {
         toast.error(valid.error.errors[0].message);
+        // setGenerating(false);
         return;
       }
 
@@ -65,9 +66,10 @@ const Upload_form = () => {
       if (storeResult) {
         // console.log(storeResult);
         toast("✅ saved successfully");
+        setSumId(storeResult.data.id);
       }
-      setSumId(storeResult?.data?.id);
     } catch (error) {
+      // setGenerating(false);
       console.log("error occured: ", error);
     } finally {
       setGenerating(false);
@@ -83,7 +85,7 @@ const Upload_form = () => {
           <p className="text-indigo-400 animate-pulse">Generating summary…</p>
         )}
 
-        {output && sumId && (
+        {output && (
           <div className="bg-neutral-900 border border-indigo-500/20 rounded-xl p-8 space-y-6">
             <h2 className="text-2xl font-bold text-indigo-400">
               Your PDF Summary
