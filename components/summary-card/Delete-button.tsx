@@ -51,7 +51,7 @@ const Deletebutton = ({ summaryId }: DeleteComponentProps) => {
         <DialogFooter>
           <Button
             variant="destructive"
-            className="bg-gray-500 hover:bg-gray-400"
+            className="bg-gray-500 hover:bg-gray-600"
             onClick={() => setOpen(false)}
           >
             Cancel
@@ -59,7 +59,7 @@ const Deletebutton = ({ summaryId }: DeleteComponentProps) => {
 
           <Button
             variant="destructive"
-            className="bg-rose-400"
+            className="bg-rose-400 hover:bg-rose-500"
             onClick={handleDelete}
           >
             Delete

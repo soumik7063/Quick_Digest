@@ -64,7 +64,7 @@ const Upload_form = () => {
       }
       setOutput(summary?.data?.summary as string);
       if (storeResult) {
-        console.log(storeResult);
+        // console.log(storeResult);
         toast("✅ saved successfully");
       }
       setSumId(storeResult.data.id);

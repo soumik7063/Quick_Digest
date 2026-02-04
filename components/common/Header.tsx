@@ -7,7 +7,6 @@ import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import ShinyText from "../ui/ShinyText";
 import { FaHamburger } from "react-icons/fa";
 import { useState } from "react";
-import { easeInOut } from "motion/react";
 
 export default function Header() {
   const [open, setOpen] = useState(false);

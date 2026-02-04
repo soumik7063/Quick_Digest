@@ -54,7 +54,7 @@ export async function generateResp(
     const pdfText = await fetchAndExtractText(url);
     // summary = await generateResponse(pdfText);
     summary = await generateResponseGeminiAi(pdfText);
-    console.log(summary);
+    // console.log(summary);
     return {
       success: true,
       message: "success",
@@ -113,7 +113,7 @@ export async function storePDF({
 
   try {
     const { userId } = await auth();
-    console.log(userId);
+    // console.log(userId);
     if (!userId) {
       return {
         success: false,

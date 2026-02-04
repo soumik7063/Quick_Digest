@@ -22,8 +22,8 @@ Follow these rules strictly:
 
 Output format:
 1. Title (if identifiable)
-2. One-paragraph executive summary (max 150 words)
-3. Key points as bullet list (5-10 bullets)
+2. One-paragraph executive summary (max 50 words)
+3. Key points as bullet list (5 bullets)
 4. Important conclusions or takeaways
 5. Keywords (5-10)
 6. Use meaningful emojis/icons

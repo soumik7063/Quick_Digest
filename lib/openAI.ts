@@ -21,7 +21,7 @@ ${pdfText}
       max_output_tokens: 1500,
     });
 
-    console.log("Raw response:", response);
+    // console.log("Raw response:", response);
 
     const finalText = response.output_text;
     return finalText;
