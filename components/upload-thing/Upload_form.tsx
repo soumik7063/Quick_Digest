@@ -22,7 +22,6 @@ const Upload_form = () => {
   const router = useRouter();
   const [output, setOutput] = useState("");
   const [generating, setGenerating] = useState(false);
-  const [sumId, setSumId] = useState("");
   const { startUpload } = useUploadThing("pdfUploader");
 
   useEffect(() => {
@@ -66,8 +65,8 @@ const Upload_form = () => {
       if (storeResult) {
         // console.log(storeResult);
         toast("✅ saved successfully");
-        setSumId(storeResult.data.id);
       }
+      router.push(`/summaries/${storeResult.data.id}?from=upload`);
     } catch (error) {
       // setGenerating(false);
       console.log("error occured: ", error);
@@ -85,14 +84,14 @@ const Upload_form = () => {
           <p className="text-indigo-400 animate-pulse">Generating summary…</p>
         )}
 
-        {output && (
+        {/* {output && (
           <div className="bg-neutral-900 border border-indigo-500/20 rounded-xl p-8 space-y-6">
             <h2 className="text-2xl font-bold text-indigo-400">
               Your PDF Summary
             </h2>
             <AnimatedSummary content={output} sumId={sumId} />
           </div>
-        )}
+        )} */}
       </div>
     </section>
   );

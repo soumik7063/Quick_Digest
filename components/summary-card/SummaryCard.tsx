@@ -5,7 +5,7 @@ import { NotebookIcon, Trash2 } from "lucide-react";
 import Deletebutton from "./Delete-button";
 import { useRouter } from "next/navigation";
 function formatTitle(title: string): string {
-  return title;
+  return title.slice(0, title.lastIndexOf(".")) || title;
 }
 const SummaryCard = ({ summary }: { summary: any }) => {
   // console.log(summary);
@@ -25,7 +25,7 @@ const SummaryCard = ({ summary }: { summary: any }) => {
         </div>
       </div>
       <p
-        onClick={() => router.push(`/summaries/${summary.id}`)}
+        onClick={() => router.push(`/summaries/${summary.id}?from=dashboard`)}
         className="line-clamp-2 pl-2 text-xs cursor-pointer"
       >
         {summary.summary_text}
