@@ -5,7 +5,6 @@ import { z } from "zod";
 import { useUploadThing } from "@/utils/uploadthing";
 import { toast } from "sonner";
 import { generateResp, storePDF } from "@/actions/upload-action";
-import AnimatedSummary from "../common/TypeAnimation";
 import { useRouter } from "next/navigation";
 
 const schema = z.object({

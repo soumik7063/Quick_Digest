@@ -17,7 +17,6 @@ const page = async (props: { params: Promise<{ id: string }> }) => {
     original_file_url,
     summary_text,
     created_at,
-    updated_at,
     word_count,
   } = response;
   const readingTime = Math.ceil(word_count / 200);
