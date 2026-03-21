@@ -60,12 +60,20 @@ const Upload_form = () => {
           summary_text: summary.data?.summary,
         });
       }
-      setOutput(summary?.data?.summary as string);
-      if (storeResult) {
-        console.log(storeResult);
-        toast("✅ saved successfully");
+      if (!storeResult?.success || !storeResult?.data?.id) {
+        toast.error(storeResult?.message ?? "Failed to save summary.");
+        setGenerating(false);
+        return;
       }
+
+      toast.success("✅ saved successfully");
       router.push(`/summaries/${storeResult.data.id}?from=upload`);
+      // setOutput(summary?.data?.summary as string);
+      // if (storeResult) {
+      //   console.log(storeResult);
+      //   toast("✅ saved successfully");
+      // }
+      // router.push(`/summaries/${storeResult.data.id}?from=upload`);
     } catch (error) {
       // setGenerating(false);
       console.log("error occured: ", error);

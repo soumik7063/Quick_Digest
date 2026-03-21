@@ -141,7 +141,8 @@ export async function storePDF({
     };
   }
   //revalidate cache
-  revalidatePath(`/summaries/${savedSummary.id}`);
+  // revalidatePath(`/summaries/${savedSummary.id}`);
+  revalidatePath(`/(logged-in)/summaries/${savedSummary.id}`);
   return {
     success: true,
     message: "summary saved successfully",
