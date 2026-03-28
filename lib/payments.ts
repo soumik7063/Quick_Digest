@@ -31,7 +31,21 @@ export async function handleStripeCheckoutSessionCompleted({
     });
   }
 }
+export async function handelStripeSubscriptionDeleted(
+  stripe: Stripe,
+  subscriptionId: String,
+) {
+  const subscription = await stripe.subscriptions.retrieve(
+    subscriptionId as string,
+  );
+  const sql = await dbConnection();
 
+  await sql`
+    UPDATE users 
+    SET status='cancelled'
+    WHERE customer_id=${subscription.customer}
+  `;
+}
 async function createorUpdateUser({
   sql,
   email,
@@ -51,8 +65,16 @@ async function createorUpdateUser({
     const user = await sql`SELECT * FROM users WHERE email = ${email}`;
     if (user.length === 0) {
       await sql`INSERT INTO users (email,full_name,customer_id ,price_id, status) VALUES (${email},${fullName},${customerId},${priceId}, ${status})`;
+    } else {
+      await sql`
+    UPDATE users 
+    SET customer_id=${customerId}, price_id=${priceId}, status=${status}
+    WHERE email=${email}
+  `;
     }
-  } catch (error) {}
+  } catch (error) {
+    console.error("Error creating or updating user:", error);
+  }
 }
 
 async function createPayments({

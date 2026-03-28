@@ -2,47 +2,8 @@ import React from "react";
 import Link from "next/link";
 import { CheckIcon } from "lucide-react";
 import Particles from "@/components/ui/Particles";
+import { plans, PriceType } from "@/lib/planPricing";
 // import Particles from "../ui/Particles";
-
-type PriceType = {
-  name: string;
-  price: number;
-  description: string;
-  items: string[];
-  id: string;
-  paymentLink: string;
-  priceId: string;
-};
-
-const plans: PriceType[] = [
-  {
-    name: "Basic",
-    price: 9,
-    description: "Perfect for individuals getting started",
-    items: [
-      "5 PDF summaries / month",
-      "Standard processing speed",
-      "Email support",
-    ],
-    id: "basic",
-    paymentLink: "#",
-    priceId: "",
-  },
-  {
-    name: "Pro",
-    price: 19,
-    description: "Best for professionals and teams",
-    items: [
-      "Unlimited PDF summaries",
-      "Priority processing",
-      "24/7 priority support",
-      "Markdown export",
-    ],
-    id: "pro",
-    paymentLink: "#",
-    priceId: "",
-  },
-];
 
 const PricingSection = () => {
   return (
@@ -157,6 +118,8 @@ const PriceCard = ({
         {/* CTA */}
         <Link
           href={paymentLink}
+          rel="noopener"
+          target="_blank"
           className={`block text-center w-full py-3 rounded-lg font-medium transition
           ${
             isPro
