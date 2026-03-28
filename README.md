@@ -20,4 +20,8 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
+## payments architechture
+<img width="1920" height="1080" alt="stripe_payments_architecture" src="https://github.com/user-attachments/assets/ab7f900c-5609-40eb-a7d7-a1af4f115715" />
+
+
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
