@@ -22,11 +22,11 @@ export const plans: PriceType[] = [
     paymentLink:
       process.env.NODE_ENV === "development"
         ? "https://buy.stripe.com/test_4gMeVd0xK5484Xv8mU4ko00"
-        : "",
+        : "https://buy.stripe.com/test_4gMeVd0xK5484Xv8mU4ko00",
     priceId:
       process.env.NODE_ENV === "development"
         ? "price_1TF8S6FR5foVDthnkWjMfiVY"
-        : "",
+        : "price_1TF8S6FR5foVDthnkWjMfiVY",
   },
   {
     name: "Pro",
@@ -42,10 +42,10 @@ export const plans: PriceType[] = [
     paymentLink:
       process.env.NODE_ENV === "development"
         ? "https://buy.stripe.com/test_00wbJ12FSaos0Hfav24ko01"
-        : "",
+        : "https://buy.stripe.com/test_00wbJ12FSaos0Hfav24ko01",
     priceId:
       process.env.NODE_ENV === "development"
         ? "price_1TFALrFR5foVDthn9EJCs3Uu"
-        : "",
+        : "price_1TFALrFR5foVDthn9EJCs3Uu",
   },
 ];
