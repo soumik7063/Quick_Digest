@@ -1,12 +1,40 @@
-import React from "react";
+"use client";
+import React, { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Sparkles, ArrowRight } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
 import Particles from "../ui/Particles";
-import { SignedIn, SignedOut } from "@clerk/nextjs";
+import { SignedIn, SignedOut, useUser } from "@clerk/nextjs";
+import { toast } from "sonner";
 
 const HeroSection = () => {
+  const { isSignedIn, user } = useUser();
+
+  const handleSendEmail = async () => {
+    try {
+      const res = await fetch("/api/sendEmail", {
+        method: "POST",
+      });
+
+      const data = await res.json();
+
+      if (data.success) {
+        toast.success("Welcome email sent 🎉");
+      } else {
+        toast.error("Failed to send email");
+      }
+    } catch (error) {
+      console.log("Error sending email:", error);
+      toast.error("Something went wrong");
+    }
+  };
+
+  useEffect(() => {
+    if (isSignedIn && user?.primaryEmailAddress?.emailAddress) {
+      handleSendEmail();
+    }
+  }, [isSignedIn]);
   return (
     <div>
       <div className="h-screen w-full absolute">
