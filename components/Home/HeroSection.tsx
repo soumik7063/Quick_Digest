@@ -4,6 +4,7 @@ import { Sparkles, ArrowRight } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
 import Particles from "../ui/Particles";
+import { SignedIn, SignedOut } from "@clerk/nextjs";
 
 const HeroSection = () => {
   return (
@@ -61,13 +62,24 @@ const HeroSection = () => {
               hover:from-indigo-500 hover:to-indigo-600
               shadow-lg transition-all"
             >
-              <Link
-                href="/upload"
-                className="flex items-center gap-2 cursor-pointer"
-              >
-                <p className="block">Try Summarise</p>
-                <ArrowRight className="w-5 h-5 animate-pulse" />
-              </Link>
+              <SignedIn>
+                <Link
+                  href="/upload"
+                  className="flex items-center gap-2 cursor-pointer"
+                >
+                  <p className="block">Try Summarise</p>
+                  <ArrowRight className="w-5 h-5 animate-pulse" />
+                </Link>
+              </SignedIn>
+              <SignedOut>
+                <Link
+                  href="/sign-in"
+                  className="flex items-center gap-2 cursor-pointer"
+                >
+                  <p className="block">Try Summarise</p>
+                  <ArrowRight className="w-5 h-5 animate-pulse" />
+                </Link>
+              </SignedOut>
             </Button>
           </div>
         </div>
