@@ -42,7 +42,7 @@ export async function sendWelcomeEmail(userEmail: string) {
 
               <p style="font-size:15px;line-height:1.6;color:#555;">
                 We're excited to have you on board! 🚀  
-                Quick Digest helps you turn long PDFs into **concise, easy-to-read summaries** in seconds.
+                Quick Digest helps you turn long PDFs into <b>concise, easy-to-read summaries</b> in seconds.
               </p>
 
               <!-- Feature highlights -->
