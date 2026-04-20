@@ -5,9 +5,10 @@ import { Button } from "../ui/button";
 
 interface UploadFormInputProps {
   onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+  generating: boolean;
 }
 
-const Upload_form_input = ({ onSubmit }: UploadFormInputProps) => {
+const Upload_form_input = ({ onSubmit, generating }: UploadFormInputProps) => {
   return (
     <form
       onSubmit={onSubmit}
@@ -24,6 +25,7 @@ const Upload_form_input = ({ onSubmit }: UploadFormInputProps) => {
       <Button
         className="rounded-full px-8 bg-gradient-to-r from-indigo-500 to-indigo-700
         hover:from-indigo-600 hover:to-indigo-800 transition-all"
+        disabled={generating}
       >
         Upload PDF
       </Button>

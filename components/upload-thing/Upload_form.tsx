@@ -85,10 +85,16 @@ const Upload_form = () => {
   return (
     <section className="relative text-indigo-100 py-16">
       <div className="max-w-4xl mx-auto px-6 text-center space-y-10">
-        <Upload_form_input onSubmit={handelSubmit} />
+        <Upload_form_input onSubmit={handelSubmit} generating={generating} />
 
         {generating && (
-          <p className="text-indigo-400 animate-pulse">Generating summary…</p>
+          <div>
+            <p className="text-indigo-400 animate-pulse">Generating summary…</p>
+            <p className="text-sm text-gray-500">
+              This may take up to 2-5 minutes.Please don't close or refresh the
+              page
+            </p>
+          </div>
         )}
 
         {/* {output && (
